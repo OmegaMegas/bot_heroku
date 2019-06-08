@@ -21,6 +21,9 @@ headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,imag
 #url = 'https://www.xvideos.com/?k=milf&p=2'
 
 def hh_parse(headers):
+        kol_vo_porno=0
+        copy_url_2=''
+        url_2=''
         page=1
         url = 'https://www.xvideos.com/?k=milf&p=' + str(page)
         session = requests.Session()
@@ -32,22 +35,23 @@ def hh_parse(headers):
             div1 = soup.find('div', attrs={'id' : 'main'}).find('div', attrs={'id' : 'content'}).find('div', attrs={'class' : 'mozaique'})
             #print(div1)
             #print(video)
-            i=0
             for video in div1.find_all('div'):
                 #clas_div = video.find('div')
                 clas_p = video.find('p', attrs={'class' : 'title'})
                 if(clas_p != None):
                     title = clas_p.find('a')
                     href = clas_p.find('a')['href']
+                    copy_url_2=url_2
                     url_2 = 'https://www.xvideos.com' + href
-                    attachment = url_2
-                    vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Держи отборного порева', 'random_id': random.randint(-2147483648,+2147483648), "attachment": attachment})
-                    time.sleep(3)
-                    i+=1
-                    if(i==4):break
-                    #print(title.text)
-                    #print(href)
-                #print(clas_p)
+                    if(copy_url_2!=url_2):
+                        attachment = url_2
+                        vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Держи отборного порева', 'random_id': random.randint(-2147483648,+2147483648), "attachment": attachment})
+                        time.sleep(3)
+                        kol_vo_porno+=1
+                        if(kol_vo_porno==4):break
+                        #print(title.text)
+                        #print(href)
+                    #print(clas_p)
         else:
             print('0')
 ######################################################
@@ -135,13 +139,19 @@ while True:
                 if response == "статус":
                         flag_status_Megasa=1
                 if response == "омега":
-                        hh_parse(headers)
+                        #hh_parse(headers)
                         vk_session.method('messages.send',
                                           {'user_id': event.user_id, 'message': 'Цитирую моего создателя: {0}'.format(status_Megasa),
                                            'random_id': random.randint(-2147483648, +2147483648)})
+                if response == "порно":
+                        hh_parse(headers)
             if (event.from_user and event.user_id==179666336):
                 if response == "порно":
                     hh_parse(headers)
+                    time.sleep(3)
+                    vk_session.method('messages.send',
+                                          {'user_id': event.user_id, 'message': 'Удачно подрочить!',
+                                           'random_id': random.randint(-2147483648, +2147483648)})
                 time.sleep(3)
                 if(response == "как мегас" or response == "как дела мегаса" or response == "как дела у мегаса" or response == "как создатель"):
                     vk_session.method('messages.send',
