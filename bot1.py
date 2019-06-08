@@ -41,6 +41,8 @@ def hh_parse(headers):
                     url_2 = 'https://www.xvideos.com' + href
                     attachment = url_2
                     vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Держи отборного порева', 'random_id': random.randint(-2147483648,+2147483648), "attachment": attachment})
+                    i+=1
+                    if(i==4):break
                     #print(title.text)
                     #print(href)
                 #print(clas_p)
