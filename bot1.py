@@ -32,6 +32,7 @@ def hh_parse(headers):
             div1 = soup.find('div', attrs={'id' : 'main'}).find('div', attrs={'id' : 'content'}).find('div', attrs={'class' : 'mozaique'})
             #print(div1)
             #print(video)
+            i=0
             for video in div1.find_all('div'):
                 #clas_div = video.find('div')
                 clas_p = video.find('p', attrs={'class' : 'title'})
@@ -41,6 +42,7 @@ def hh_parse(headers):
                     url_2 = 'https://www.xvideos.com' + href
                     attachment = url_2
                     vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Держи отборного порева', 'random_id': random.randint(-2147483648,+2147483648), "attachment": attachment})
+                    time.sleep(3)
                     i+=1
                     if(i==4):break
                     #print(title.text)
