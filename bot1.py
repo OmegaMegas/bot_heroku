@@ -3,6 +3,8 @@ import vk_api
 from datetime import datetime
 import random
 import time
+import requests
+from bs4 import BeautifulSoup
 ya=289841871
 #alar - 179666336;
 #galva - 50230213;
@@ -13,7 +15,38 @@ vk_session = vk_api.VkApi(token ="4eeb6adf5a015676d3ec1da94de6559dbb7ad8782e6f80
 
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
+##################################################
+headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+           'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'}
+#url = 'https://www.xvideos.com/?k=milf&p=2'
 
+def hh_parse(headers):
+        page=1
+        url = 'https://www.xvideos.com/?k=milf&p=' + str(page)
+        session = requests.Session()
+        request = session.get(url, headers=headers)
+        #############
+        if request.status_code==200:
+            #print('1')
+            soup = BeautifulSoup(request.content, 'html.parser')
+            div1 = soup.find('div', attrs={'id' : 'main'}).find('div', attrs={'id' : 'content'}).find('div', attrs={'class' : 'mozaique'})
+            #print(div1)
+            #print(video)
+            for video in div1.find_all('div'):
+                #clas_div = video.find('div')
+                clas_p = video.find('p', attrs={'class' : 'title'})
+                if(clas_p != None):
+                    title = clas_p.find('a')
+                    href = clas_p.find('a')['href']
+                    url_2 = 'https://www.xvideos.com' + href
+                    attachment = url_2
+                    vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Держи отборного порева', 'random_id': random.randint(-2147483648,+2147483648), "attachment": attachment})
+                    #print(title.text)
+                    #print(href)
+                #print(clas_p)
+        else:
+            print('0')
+######################################################
 #galva
 molitva1 =  {'Возлюби Императора,\n'
             'Ибо Он есть избавление Человечества.\n'
@@ -98,13 +131,13 @@ while True:
                 if response == "статус":
                         flag_status_Megasa=1
                 if response == "омега":
+                        hh_parse(headers)
                         vk_session.method('messages.send',
                                           {'user_id': event.user_id, 'message': 'Цитирую моего создателя: {0}'.format(status_Megasa),
                                            'random_id': random.randint(-2147483648, +2147483648)})
             if (event.from_user and event.user_id==179666336):
                 if response == "порно":
-                    attachment = get(vk_session,-70469586,session_api)
-                    vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Держи отборного порева', 'random_id': random.randint(-2147483648,+2147483648), "attachment": attachment})
+                    hh_parse(headers)
                 time.sleep(3)
                 if(response == "как мегас" or response == "как дела мегаса" or response == "как дела у мегаса" or response == "как создатель"):
                     vk_session.method('messages.send',
