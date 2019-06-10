@@ -24,7 +24,7 @@ def hh_parse(headers):
         kol_vo_porno=0
         copy_url_2=''
         url_2=''
-        page=1
+        page=random.randint(0, 10)
         url = 'https://www.xvideos.com/?k=milf&p=' + str(page)
         session = requests.Session()
         request = session.get(url, headers=headers)
@@ -36,16 +36,20 @@ def hh_parse(headers):
             #print(div1)
             #print(video)
             for video in div1.find_all('div'):
-                #clas_div = video.find('div')
+                clas_div = video.find('div')
                 clas_p = video.find('p', attrs={'class' : 'title'})
-                if(clas_p != None):
+                if(clas_p != None and clas_div!= None):
                     title = clas_p.find('a')
+                    #print(title)
                     href = clas_p.find('a')['href']
+                    img = clas_div.find('img')['data-src']
                     copy_url_2=url_2
                     url_2 = 'https://www.xvideos.com' + href
                     if(copy_url_2!=url_2):
-                        attachment = url_2
-                        vk_session.method('messages.send', {'user_id': event.user_id, 'message': 'Держи отборного порева', 'random_id': random.randint(-2147483648,+2147483648), "attachment": attachment})
+                        porn_title=title.text
+                        porn_url = url_2
+                        porn_img = img
+                        vk_session.method('messages.send', {'user_id': event.user_id, 'message': '{0}\n{1}'.format(porn_title,porn_url), 'random_id': random.randint(-2147483648,+2147483648), "attachment": porn_img})
                         time.sleep(3)
                         kol_vo_porno+=1
                         if(kol_vo_porno==4):break
