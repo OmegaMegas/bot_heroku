@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 ya=289841871
 #alar - 179666336;
 #galva - 50230213;
+#Morati - 173018219
 #Oxxi - 61705242; Magos data operus
 login, password = "79064374132", "pak228322A"
 vk_session = vk_api.VkApi(token ="4eeb6adf5a015676d3ec1da94de6559dbb7ad8782e6f80c9ef7a97c9a196204f828a870c089c83c63f4fe")
@@ -188,6 +189,13 @@ while True:
                                           {'user_id': event.user_id, 'message': 'Цитирую моего создателя: {0}'.format(status_Megasa),
                                            'random_id': random.randint(-2147483648, +2147483648)})
                 time.sleep(3)
+            if (event.from_user and event.user_id==173018219):
+                if response == "порно":
+                    hh_parse(headers)
+                    time.sleep(3)
+                    vk_session.method('messages.send',
+                                          {'user_id': event.user_id, 'message': 'Только Гандоны не испорть',
+                                           'random_id': random.randint(-2147483648, +2147483648)})
             if (event.from_user and event.user_id==61705242):
                 if(priv_oxxi==0):
                     vk_session.method('messages.send',
